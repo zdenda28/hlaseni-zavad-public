@@ -1,1 +1,1 @@
-# hlaseni-zavad-public
+# Aplikace pro sběr podnětů od obyvatel města Letohrad
