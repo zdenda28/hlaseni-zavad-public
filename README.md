@@ -1,1 +1,2 @@
-# Aplikace pro sběr podnětů od obyvatel města Letohrad
+# Bakalářská práce - Aplikace pro sběr podnětů od obyvatel města Letohrad
+Autor: Zdeněk Tomka
