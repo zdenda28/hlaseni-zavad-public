@@ -23,7 +23,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.tomka.hlasenizavad"
+    },
+    "android": {
+      "package": "com.tomka.hlasenizavad"
     },
     "description": "",
     "githubUrl": "https://github.com/zdenda28/hlaseni-zavad"
