@@ -20,7 +20,8 @@ import {
     Alert,
     Dimensions,
     Image,
-    ScrollView
+    ScrollView,
+    AsyncStorage
 } from 'react-native';
 import { ImagePicker, Permissions, Location } from 'expo';
 import { Overlay } from 'react-native-elements';
@@ -68,6 +69,8 @@ export default class ReportScreen extends React.Component {
 
     componentDidMount() {
         this._isMounted = true;
+
+        this.retrieveUsedEmail();
 
         this._onFocusListener = this.props.navigation.addListener('didFocus', (payload) => {
             if (this.state.location.longitude || this.state.GPSDisabled) {
@@ -118,6 +121,27 @@ export default class ReportScreen extends React.Component {
     componentWillUnmount() {
         this._isMounted = false;
     }
+
+    storeUsedEmail = async (contactMail) => {
+        try {
+            await AsyncStorage.setItem('contactMail', contactMail);
+        } catch (error) {
+            // Error saving data
+        }
+    };
+
+    retrieveUsedEmail = async () => {
+        try {
+            const value = await AsyncStorage.getItem('contactMail');
+            if (value !== null) {
+                // We have data!!
+                console.log(value);
+                this.setState({ contactMail: value });
+            }
+        } catch (error) {
+            // Error retrieving data
+        }
+    };
 
     geoButtonEnable = () => {
         if (this.state.geoState == 'Automatické načítání polohy...') {
@@ -234,6 +258,7 @@ export default class ReportScreen extends React.Component {
         })
             .then(() => {
                 console.log("Document successfully written!");
+                this.storeUsedEmail(this.state.contactMail);
                 this.navigateWithReset({
                     submitSucces: true,
                     coords: {
@@ -480,6 +505,7 @@ export default class ReportScreen extends React.Component {
                     <View style={styles.item}>
                         <Text style={styles.inputLabel}>Kontaktní email</Text>
                         <TextInput
+                            value={this.state.contactMail}
                             style={[styles.textInput,
                             this.state.contactMailErr ? { borderColor: WARNING_RED } : { borderColor: '#C0C0C0' }]}
                             placeholder='Email (nepovinný)'
