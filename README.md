@@ -18,19 +18,19 @@ Front-endová část této mobilní je napsána pomocí JavaSciptového framewor
 
 2) Globálně si nainstalujte balíček exp níže uvedeným příkazem 
    prostřednictvím příkazové řádky.
-
+	```
 	npm install exp --global
-
+	```
 3) Nainstalujte si chybějící balíčky. Nejprve se přesuňte v rámci příkazové
    řádky do složky 'aplikace', jež je součástí přílohy. Následně spusťte níze 
    uvedený příkaz.
-
+	```
 	npm install
-
+	```
 4) V rámci složky 'aplikace' v prostředí příkazové řádky zadejte následující příkaz.
-
+	```
 	exp start
-
+	```
 5) Nyní jste spustili metro bundler, který připravil aplikaci ke spuštění.
 
 6) Ke spuštění aplikace v telefonu potřebujete mít nainstalovanou aplikaci expo a naskenovat
