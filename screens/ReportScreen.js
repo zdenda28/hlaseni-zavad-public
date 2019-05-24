@@ -359,6 +359,13 @@ export default class ReportScreen extends React.Component {
     };
 
     submitForm = () => {
+
+        //očištění od mezer
+        this.setState({
+            reportTitle: this.state.reportTitle.trim(),
+            reportDescription: this.state.reportDescription.trim()
+        });
+
         if (this.validate()) {
             this.setState({
                 spinnerOverlayIsVisible: true
