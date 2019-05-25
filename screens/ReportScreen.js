@@ -51,6 +51,7 @@ export default class ReportScreen extends React.Component {
                 longitude: null,
             },
             locationErr: false,
+            address: 'Letohrad',
             GPSDisabled: false,
             imgOverlayIsVisible: false,
             spinnerOverlayIsVisible: false,
@@ -118,8 +119,50 @@ export default class ReportScreen extends React.Component {
         }
     };
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.location.latitude != this.state.location.latitude) {
+            this.getReverseAdress(this.state.location.latitude, this.state.location.longitude);
+        }
+    }
+
     componentWillUnmount() {
         this._isMounted = false;
+    }
+
+    getReverseAdress = (latitude, longitude) => {
+        const addressRadius = 10; //okruh v metrech, kde je hledána adresa
+        const request = 'https://reverse.geocoder.api.here.com/6.2/reversegeocode.json?prox=' + latitude + '%2C' + longitude + '%2C' + addressRadius + '&mode=retrieveAddresses&maxresults=1&gen=9&app_id=Lt8ZxRpNKTlQB8b7UdA9&app_code=GYOt71oOk_1RaXceZFJLUQ';
+
+        return fetch(request)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                var address = 'Letohrad';
+
+                responseJson = responseJson.Response.View[0].Result[0].Location.Address;
+
+                if (responseJson.District) {
+                    address = responseJson.District;
+
+                    if (responseJson.Street) {
+                        address += ', ' + responseJson.Street;
+
+                        if (responseJson.HouseNumber) {
+                            address += ' ' + responseJson.HouseNumber;
+                        }
+                    }
+                }
+
+                this.setState({
+                    address: address
+                });
+
+            })
+            .catch((error) => {
+                console.error(error);
+                this.setState({
+                    address: 'Letohrad'
+                });
+            });
     }
 
     storeUsedEmail = async (contactMail) => {
@@ -252,6 +295,7 @@ export default class ReportScreen extends React.Component {
             email: email,
             fotografie: imageUrl,
             lokace: this.state.location,
+            adresa: this.state.address,
             nazev: this.state.reportTitle,
             popis: this.escapeSpecialChars(this.state.reportDescription),
             timestamp: timestamp,

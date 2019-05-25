@@ -73,6 +73,7 @@ export default class ReportDetailScreen extends React.Component {
             <ScrollView contentContainerStyle={styles.container}>
                 <Text h2 style={styles.item}>{this.state.data.nazev}</Text>
                 <Text style={{ color: 'grey' }}>{this.state.dateTime}</Text>
+                <Text style={{ color: 'grey' }}>{this.state.data.adresa}</Text>
                 <Text style={[styles.item, { fontSize: 15 }]}>
                     {this.state.data.popis && this.escapedToSpecialChars(this.state.data.popis)}
                 </Text>
